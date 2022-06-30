@@ -160,16 +160,16 @@ for (let index = 0; index < posts.length; index++) {
             posts[index].is_liked = true;
         }
 
-        console.log(posts[index].id);
-
         if (posts[index].is_liked === true) {
             likeButtons[index].classList.add("like-button--liked");
             posts[index].likes++;
-            let likeCounter = document.getElementById(`like-counter-`);
+            let likeCounter = document.getElementById(`like-counter-${posts[index].id}`);
             likeCounter.innerHTML = posts[index].likes;
         } else if(posts[index].is_liked === false){
             likeButtons[index].classList.remove("like-button--liked");
             posts[index].likes--;
+            let likeCounter = document.getElementById(`like-counter-${posts[index].id}`);
+            likeCounter.innerHTML = posts[index].likes;
         }
     });
     
