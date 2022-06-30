@@ -103,13 +103,10 @@ let containerPosts = document.getElementById("container")
 posts.forEach((post, index, array) => {
 
     let imagePicUser;
-    if (post.author.image == null) {
-        imagePicUser = document.createElement("div");
-        imagePicUser.classList.add("post-meta__icon", "icon_user_img");
-        imagePicUser.innerHTML = "AB";
+    if (post.author.image == null || post.author.image == "null") {
+        imagePicUser = `<div class = "post-meta__icon icon_user_img">AB</div>`
         console.log(imagePicUser);
     } else{
-        
         imagePicUser = `<img class="profile-pic" src="${post.author.image}" alt="${post.author.name}"></img>`
     }
 
@@ -141,9 +138,39 @@ posts.forEach((post, index, array) => {
                     </a>
                 </div>
                 <div class="likes__counter">
-                    Piace a <b id="like-counter-1" class="js-likes-counter">80</b> persone
+                    Piace a <b id="like-counter-${post.id}" class="js-likes-counter">${post.likes}</b> persone
                 </div>
             </div>
         </div>
     </div>`
 });
+
+
+
+let likeButtons = document.querySelectorAll("div.likes__cta a.like-button");
+for (let index = 0; index < posts.length; index++) {
+    if (posts[index].is_liked === true) {
+        likeButtons[index].classList.add("like-button--liked");
+        controlAlreadyBeenClicked = true;
+    }
+    likeButtons[index].addEventListener("click", () => {
+        if (posts[index].is_liked === true) {
+            posts[index].is_liked = false;
+        }else if(posts[index].is_liked === false){
+            posts[index].is_liked = true;
+        }
+
+        console.log(posts[index].id);
+
+        if (posts[index].is_liked === true) {
+            likeButtons[index].classList.add("like-button--liked");
+            posts[index].likes++;
+            let likeCounter = document.getElementById(`like-counter-`);
+            likeCounter.innerHTML = posts[index].likes;
+        } else if(posts[index].is_liked === false){
+            likeButtons[index].classList.remove("like-button--liked");
+            posts[index].likes--;
+        }
+    });
+    
+}
