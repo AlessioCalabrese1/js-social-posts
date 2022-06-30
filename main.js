@@ -104,7 +104,9 @@ posts.forEach((post) => {
 
     let imagePicUser;
     if (post.author.image == null || post.author.image == "null") {
-        imagePicUser = `<div class = "post-meta__icon icon_user_img">AB</div>`
+        let initialUser = post.author.name.split(" ");
+        let nameSurname = initialUser[0][0] + initialUser[1][0];
+        imagePicUser = `<div class = "post-meta__icon icon_user_img">${nameSurname}</div>`
     } else{
         imagePicUser = `<img class="profile-pic" src="${post.author.image}" alt="${post.author.name}"></img>`
     }
